@@ -4,6 +4,9 @@ from pdf_converter.foundation.logger_service import logger
 from pdf_converter.foundation.data_schemas import AppSettings
 
 class PdfToImageConverter:
+    '''
+    Only Surpport one2one mode
+    '''
     def __init__(self, config: AppSettings):
         self.cfg = config
         self.input_dir = config.directories.abs_input_dir
