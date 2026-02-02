@@ -1,6 +1,6 @@
 # PDF-Image Converter Tool
 
-A professional, configurable Python tool for converting between PDF files and images. Built with Python 3.12 and managed with `uv`.
+一款专业、可配置的 Python 工具，用于在 PDF 文件和图片之间进行转换。基于 Python 3.12 构建并使用 `uv` 管理。
 
 ## 核心功能
 
