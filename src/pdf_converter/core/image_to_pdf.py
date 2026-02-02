@@ -6,14 +6,14 @@ from pdf_converter.foundation.logger_service import logger
 from pdf_converter.foundation.data_schemas import AppSettings
 from pdf_converter.utils.app_constants import IMG_EXTENSIONS
 
-class ImageMerger:
+class ImageToPdfConverter:
     def __init__(self, config: AppSettings):
         self.cfg = config
         self.input_dir = config.directories.abs_input_dir
         self.output_dir = config.directories.abs_output_dir
 
     def run(self):
-        logger.info(f"Starting Image Merger in {self.input_dir}")
+        logger.info(f"Starting ImageToPdfConverter in {self.input_dir}")
         if not self.input_dir.exists():
             logger.error(f"Input directory does not exist: {self.input_dir}")
             return
