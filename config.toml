@@ -1,0 +1,120 @@
+#META:原则显式优于隐式！简单胜于复杂！
+#程序设计要求:必须严格按照注释所给的选项填写，配置中，对于必选值若填写错误需要在log内写明ERROR(红色)并退出；对于必选但未填写的，使用默认值兜底，但使用WARNING(黄色)作出警告程序继续运行，并写明默认的行为(例如work_dir未填写，则使用当前脚本所在的目录input,output_dir同理),对于可选项的填写问题使用蓝色的warning，继续警告，并报告此设置不生效，报告需要为彩色，且按时间戳的顺序排列(需要转化为UTC时间精确到秒，并以2026-02-02 18:57:50.123456+08:00格式输出)
+#2.只对
+
+
+##################################################
+# 基础运行设置
+##################################################
+
+
+[Settings]
+work_mode = "pdf2img"
+# 当前工作模式：除非通过命令行参数指定，否则默认为 work_mode 的值
+#
+# 可选值：
+# - img2pdf : 图片 → PDF
+# - pdf2img : PDF → 图片
+##################################################
+# 通用目录配置
+##################################################
+
+[Settings.Directories]
+work_space = ""
+# 工作空间，程序运行的根目录，缓存 / 日志 / 临时文件等都放在该目录下
+
+input_dir = ""
+# 输入目录，该目录相对于 work_space
+# - img2pdf : 图片所在目录
+# - pdf2img : PDF 所在目录
+
+output_dir = ""
+# 输出目录，该目录相对于 work_space
+# - img2pdf : PDF 输出目录
+# - pdf2img : 图片输出目录
+##################################################
+# 图片 → PDF 输出策略（img2pdf）
+##################################################
+
+[Settings.PdfOutputStrategy]
+mode = "many_to_one"
+# PDF 生成策略（仅在 work_mode = img2pdf 时生效）
+#
+# 可选值：
+# - many_to_one   : 多张图片 → 一个 PDF
+# - one_to_one    : 一张图片 → 一个 PDF
+# - auto_grouping : 自动分组合并（智能模式，预留）
+
+output_name = "merged.pdf"
+# mode = many_to_one 时生效
+# 合并后的 PDF 文件名
+# 为空则由程序自动生成
+
+overwrite_existing = false
+# 输出 PDF 已存在时：
+# false : 跳过并自动重命名
+# true  : 直接覆盖
+##################################################
+# 智能分组合并（img2pdf，预留接口/注释即可暂不实现）
+##################################################
+
+[Settings.PdfOutputStrategy.AutoGrouping]
+enable = false
+# 仅当 mode = auto_grouping 时读取
+
+group_by = "none"
+# 分组规则（预留）
+#
+# 可选值示例：
+# - none        : 不分组（占位）
+# - prefix     : 按文件名前缀分组
+# - directory  : 按子目录分组
+# - metadata   : 按图片元数据分组
+
+max_images_per_pdf = 0
+# 每个 PDF 最大图片数量
+# 0 表示不限制
+##################################################
+# PDF → 图片输出策略（pdf2img）
+##################################################
+
+[Settings.ImageOutputStrategy]
+mode = "one_to_one"
+# 图片生成策略（仅在 work_mode = pdf2img 时生效）
+#
+# 当前版本仅支持：
+# - one_to_one : PDF 每一页 → 一张图片
+##################################################
+# PDF → 图片渲染参数
+##################################################
+
+[Settings.ImageOutputStrategy.Output]
+image_format = "png"
+# 输出图片格式
+# 可选值：png / jpg / jpeg / webp
+
+dpi = 300
+# PDF 渲染分辨率（DPI）
+
+color_mode = "rgb"
+# 颜色模式
+# - rgb
+# - grayscale
+
+overwrite_existing = false
+# 输出图片已存在时是否覆盖
+##################################################
+# PDF → 图片命名规则
+##################################################
+
+[Settings.ImageOutputStrategy.Naming]
+page_naming = "page_index"
+# 页面命名规则
+#
+# 可选值：
+# - page_index : page_001.png
+# - original  : 原 PDF 名 + 页码
+# - custom    : 自定义模板（预留）
+
+start_index = 1
+# 页码起始索引（常见为 1）
